@@ -1,0 +1,43 @@
+# ---------------------------
+# Stage 1: Builder (instala dependências)
+# ---------------------------
+FROM node:22.14-alpine AS builder
+
+# Variáveis de ambiente
+ENV NUXT_HOST=0.0.0.0 \
+  NUXT_PORT=3000 \
+  NODE_ENV=development \
+  # opcional: melhora cache npm
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
+# Diretório de trabalho
+WORKDIR /app
+
+# Copia arquivos necessários primeiro (para aproveitar cache)
+COPY package*.json ./
+
+# Instala dependências
+RUN npm install
+
+# Copia todo o projeto
+COPY . .
+
+# ---------------------------
+# Stage 2: Dev Environment
+# ---------------------------
+FROM node:22.14-alpine
+
+# Instala utilitários básicos (opcional para debug)
+RUN apk add --no-cache bash
+
+# Diretório de trabalho
+WORKDIR /app
+
+# Copia node_modules e projeto do builder
+COPY --from=builder /app /app
+
+# Expõe a porta padrão do Nuxt
+EXPOSE 3000
+
+# Ativa modo de desenvolvimento com hot reload
+CMD ["npm", "run", "dev"]

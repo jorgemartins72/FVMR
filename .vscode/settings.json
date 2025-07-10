@@ -1,0 +1,37 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": ["javascript", "vue"],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.classAttributes": ["class", "ui"],
+  "tailwindCSS.experimental.classRegex": [["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]],
+  "eslint.codeActionsOnSave.mode": "all",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#cce4fa",
+    "activityBar.background": "#cce4fa",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#f16eb2",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#15202b99",
+    "sash.hoverBorder": "#cce4fa",
+    "statusBar.background": "#9dccf6",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#6eb4f2",
+    "statusBarItem.remoteBackground": "#9dccf6",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#9dccf6",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#9dccf699",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#9dccf6"
+}

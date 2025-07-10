@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /fvmr/gestao
+Disallow: /fvmr/data

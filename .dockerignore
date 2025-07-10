@@ -1,0 +1,36 @@
+# Ignora node_modules do host (será instalado no container)
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Cache do Nuxt e Vite
+.nuxt
+.output
+dist
+.vite
+.cache
+
+# Diretórios de build
+build
+coverage
+
+# Configurações do editor/IDE
+.vscode
+.idea
+*.swp
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Git e outras VCS
+.git
+.gitignore
+.gitattributes
+
+# Docker artefatos locais
+Dockerfile
+docker-compose.yml
+.dockerignore
