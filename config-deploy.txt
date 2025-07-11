@@ -1,0 +1,14 @@
+- Criar o ECR (Terraform)
+- Criar Dockerfile pra produção
+  - Fazer o build
+    > docker build --no-cache -t fvmr-sitenovo .
+  - Testar
+    > docker run -p 3000:3000 fvmr-sitenovo
+- Tag na imagem
+  > docker tag fvmr-sitenovo:latest 170192930815.dkr.ecr.us-east-1.amazonaws.com/fvmr-sitenovo:latest
+- Login no ECR
+  > aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 170192930815.dkr.ecr.us-east-1.amazonaws.com/fvmr-sitenovo
+- Enviar a imagem pro ECR (primeiro push)
+  > docker push 170192930815.dkr.ecr.us-east-1.amazonaws.com/fvmr-sitenovo:latest || true
+    #### se precisar forçar a atualizar o serviço:
+    > aws ecs update-service --cluster FVMR-CLUSTER --service site-service --force-new-deployment

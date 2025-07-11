@@ -23,6 +23,7 @@ export default defineNuxtConfig({
       'Roboto Condensed': [100, 300, 400, 700],
       Roboto: [100, 300, 400, 700],
       Geologica: [100, 400, 600, 800, 900],
+      'Fira Code': [600],
     },
   },
   app: {

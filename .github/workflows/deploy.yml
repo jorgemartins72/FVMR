@@ -1,0 +1,62 @@
+name: Deploy Nuxt para ECS
+
+on:
+  push:
+    branches: [main] # ou master, ajuste conforme o seu padrão
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+  CONTAINER_NAME: site
+  ECS_CLUSTER_NAME: ${{ vars.ECS_CLUSTER_NAME }}
+  ECS_SERVICE_NAME: ${{ vars.ECS_SERVICE_NAME }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout o código
+        uses: actions/checkout@v4
+
+      - name: Configurar credenciais da AWS
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login no Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build e push da imagem Docker
+        run: |
+          docker build -t $ECR_REPOSITORY:latest .
+          docker push $ECR_REPOSITORY:latest
+
+      - name: Renderizar task definition do Nuxt
+        id: render
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ env.ECR_REPOSITORY }}:latest
+          environment-variables: |
+            API_DATASCORE=${{ vars.API_DATASCORE }}
+            NUXT_HOST=${{ vars.NUXT_HOST }}
+            NUXT_PORT=${{ vars.NUXT_PORT }}
+          secrets: |
+            NUXT_OAUTH_GOOGLE_CLIENT_ID=${{ secrets.NUXT_OAUTH_GOOGLE_CLIENT_ID }}
+            NUXT_OAUTH_GOOGLE_CLIENT_SECRET=${{ secrets.NUXT_OAUTH_GOOGLE_CLIENT_SECRET }}
+            NUXT_SESSION_PASSWORD=${{ secrets.NUXT_SESSION_PASSWORD }}
+
+      - name: Atualizar ECS service do Nuxt
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE_NAME }}
+          cluster: ${{ env.ECS_CLUSTER_NAME }}
+          wait-for-service-stability: true
