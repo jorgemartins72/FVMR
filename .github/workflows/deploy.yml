@@ -2,7 +2,7 @@ name: Deploy Nuxt para ECS
 
 on:
   push:
-    branches: [main] # ou master, ajuste conforme o seu padrão
+    branches: [master] # ou master, ajuste conforme o seu padrão
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
