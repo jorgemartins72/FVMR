@@ -9,6 +9,8 @@ export default defineOAuthGoogleEventHandler({
       provider: 'Google',
     }
 
+    console.log("✅ Requisição bem-sucedida:")
+
     const apiDatascore = useRuntimeConfig().public.apiDatascore
 
     try {
