@@ -48,6 +48,9 @@ jobs:
             API_DATASCORE=${{ vars.API_DATASCORE }}
             NUXT_HOST=${{ vars.NUXT_HOST }}
             NUXT_PORT=${{ vars.NUXT_PORT }}
+            NUXT_OAUTH_GOOGLE_CLIENT_ID=${{ secrets.NUXT_OAUTH_GOOGLE_CLIENT_ID }}
+            NUXT_OAUTH_GOOGLE_CLIENT_SECRET=${{ secrets.NUXT_OAUTH_GOOGLE_CLIENT_SECRET }}
+            NUXT_SESSION_PASSWORD=${{ secrets.NUXT_SESSION_PASSWORD }}
 
       - name: Atualizar ECS service do Nuxt
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1

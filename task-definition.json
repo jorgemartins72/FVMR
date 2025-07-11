@@ -23,20 +23,6 @@
           "protocol": "tcp"
         }
       ],
-      "secrets": [
-        {
-          "name": "NUXT_OAUTH_GOOGLE_CLIENT_ID",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:170192930815:secret:NUXT_OAUTH_GOOGLE_CLIENT_ID"
-        },
-        {
-          "name": "NUXT_OAUTH_GOOGLE_CLIENT_SECRET",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:170192930815:secret:NUXT_OAUTH_GOOGLE_CLIENT_SECRET"
-        },
-        {
-          "name": "NUXT_SESSION_PASSWORD",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:170192930815:secret:NUXT_SESSION_PASSWORD"
-        }
-      ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
