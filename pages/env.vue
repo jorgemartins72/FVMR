@@ -4,6 +4,8 @@ import { ref, onMounted } from 'vue'
 const envVars = ref([])
 const error = ref(null)
 
+const aaaa = useRuntimeConfig().public.apiDatascore
+
 onMounted(async () => {
   try {
     const response = await $fetch('/api/env')
@@ -24,11 +26,13 @@ onMounted(async () => {
     <div v-if="error" class="text-red-500">{{ error }}</div>
     <div v-else-if="envVars.length">
       <ul class="space-y-0 font-mono">
-        <li v-for="(env, index) in envVars" :key="index">
-          <div class="flex">
-            <div class="basis-1/5 text-right font-bold wrap-normal">{{ env.key }}:</div>
-            <div class="basis-4/5 pl-2 wrap-normal">{{ env.value }}</div>
-          </div>
+        <li v-for="(env, index) in envVars" :key="index" class="flex">
+          <div class="basis-1/5 text-right font-bold wrap-normal">{{ env.key }}:</div>
+          <div class="basis-4/5 pl-2 wrap-normal">{{ env.value }}</div>
+        </li>
+        <li class="flex bg-gray-200">
+          <div class="basis-1/5 text-right font-bold wrap-normal">runtime:</div>
+          <div class="basis-4/5 pl-2 wrap-normal">{{ aaaa }}</div>
         </li>
       </ul>
     </div>
