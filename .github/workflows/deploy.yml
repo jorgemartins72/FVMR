@@ -59,3 +59,28 @@ jobs:
           service: ${{ env.ECS_SERVICE_NAME }}
           cluster: ${{ env.ECS_CLUSTER_NAME }}
           wait-for-service-stability: true
+
+      - name: Apagar imagens antigas no ECR (manter as 2 mais recentes)
+        run: |
+          echo "🔄 Limpando imagens antigas no ECR..."
+          REPO_NAME=$(echo $ECR_REPOSITORY | cut -d'/' -f2)
+
+          IMAGE_DIGESTS=$(aws ecr describe-images \
+            --repository-name $REPO_NAME \
+            --region $AWS_REGION \
+            --query 'sort_by(imageDetails,& imagePushedAt)[*].imageDigest' \
+            --output text)
+
+          KEEP_DIGESTS=$(echo "$IMAGE_DIGESTS" | tail -n 2)
+
+          for digest in $IMAGE_DIGESTS; do
+            if ! echo "$KEEP_DIGESTS" | grep -q "$digest"; then
+              echo "🗑 Excluindo imagem antiga: $digest"
+              aws ecr batch-delete-image \
+                --repository-name $REPO_NAME \
+                --image-ids imageDigest=$digest \
+                --region $AWS_REGION
+            else
+              echo "✅ Mantendo imagem recente: $digest"
+            fi
+          done
