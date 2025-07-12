@@ -45,7 +45,7 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ env.ECR_REPOSITORY }}:latest
           environment-variables: |
-            API_DATASCORE=${{ vars.API_DATASCORE }}
+            NUXT_PUBLIC_API_DATASCORE=${{ vars.NUXT_PUBLIC_API_DATASCORE }}
             NUXT_HOST=${{ vars.NUXT_HOST }}
             NUXT_PORT=${{ vars.NUXT_PORT }}
             NUXT_OAUTH_GOOGLE_CLIENT_ID=${{ secrets.NUXT_OAUTH_GOOGLE_CLIENT_ID }}
