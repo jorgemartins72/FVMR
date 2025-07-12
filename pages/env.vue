@@ -4,7 +4,15 @@ import { ref, onMounted } from 'vue'
 const envVars = ref([])
 const error = ref(null)
 
-const aaaa = useRuntimeConfig().public.apiDatascore
+// 🟢 Tenta pegar do runtimeConfig primeiro
+const runtime = useRuntimeConfig().public.apiDatascore
+
+// 🟠 Fallback para process.env no SSR
+const serverEnv =
+  process.env.NUXT_PUBLIC_API_DATASCORE || process.env.API_DATASCORE || 'NÃO DEFINIDO'
+
+// 🟣 Decide qual valor usar
+const apiDatascore = runtime || serverEnv
 
 onMounted(async () => {
   try {
@@ -32,7 +40,15 @@ onMounted(async () => {
         </li>
         <li class="flex bg-gray-200">
           <div class="basis-1/5 text-right font-bold wrap-normal">runtime:</div>
-          <div class="basis-4/5 pl-2 wrap-normal">{{ aaaa }}</div>
+          <div class="basis-4/5 pl-2 wrap-normal">{{ runtime }}</div>
+        </li>
+        <li class="flex bg-gray-200">
+          <div class="basis-1/5 text-right font-bold wrap-normal">serverEnv:</div>
+          <div class="basis-4/5 pl-2 wrap-normal">{{ serverEnv }}</div>
+        </li>
+        <li class="flex bg-gray-200">
+          <div class="basis-1/5 text-right font-bold wrap-normal">apiDatascore:</div>
+          <div class="basis-4/5 pl-2 wrap-normal">{{ apiDatascore }}</div>
         </li>
       </ul>
     </div>

@@ -38,8 +38,8 @@ export default defineNuxtConfig({
       },
     },
     public: {
-      apiDatascore: process.env.API_DATASCORE, // || 'http://localhost:8000',
-      apiBaseUrl: process.env.API_DATASCORE, // || 'http://localhost:8000',
+      apiDatascore: process.env.NUXT_PUBLIC_API_DATASCORE, // || 'http://localhost:8000',
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_DATASCORE, // || 'http://localhost:8000',
     },
   },
 })
