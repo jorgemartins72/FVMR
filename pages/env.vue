@@ -5,16 +5,7 @@ const envVars = ref([])
 const error = ref(null)
 
 // 🟢 Tenta pegar do runtimeConfig primeiro
-const runtime = useRuntimeConfig().public.apiDatascore
-
-// 🟠 Fallback para process.env no SSR
-const serverEnv =
-  process.env.NUXT_PUBLIC_API_DATASCORE || process.env.API_DATASCORE || 'NÃO DEFINIDO'
-
-// 🟣 Decide qual valor usar
-const apiDatascore = runtime || serverEnv
-
-const config = useRuntimeConfig()
+const apiDatascore = useRuntimeConfig().public.apiDatascore
 
 onMounted(async () => {
   try {
@@ -41,20 +32,8 @@ onMounted(async () => {
           <div class="basis-4/5 pl-2 wrap-normal">{{ env.value }}</div>
         </li>
         <li class="flex bg-gray-200">
-          <div class="basis-1/5 text-right font-bold wrap-normal">runtime:</div>
-          <div class="basis-4/5 pl-2 wrap-normal">{{ runtime }}</div>
-        </li>
-        <li class="flex bg-gray-200">
-          <div class="basis-1/5 text-right font-bold wrap-normal">serverEnv:</div>
-          <div class="basis-4/5 pl-2 wrap-normal">{{ serverEnv }}</div>
-        </li>
-        <li class="flex bg-gray-200">
           <div class="basis-1/5 text-right font-bold wrap-normal">apiDatascore:</div>
           <div class="basis-4/5 pl-2 wrap-normal">{{ apiDatascore }}</div>
-        </li>
-        <li class="flex bg-gray-200">
-          <div class="basis-1/5 text-right font-bold wrap-normal">config:</div>
-          <div class="basis-4/5 pl-2 wrap-normal">{{ config.public.apiBaseUrl }}</div>
         </li>
       </ul>
     </div>
