@@ -1,5 +1,5 @@
 const allowedKeys = [
-  'API_DATASCORE',
+  'NUXT_PUBLIC_API_DATASCORE',
   'NODE_ENV',
   'NUXT_HOST',
   'NUXT_OAUTH_GOOGLE_CLIENT_ID',
