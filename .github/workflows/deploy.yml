@@ -84,3 +84,26 @@ jobs:
               echo "✅ Mantendo imagem recente: $digest"
             fi
           done
+
+      - name: Apagar revisões antigas da Task Definition (manter as 2 mais recentes)
+        run: |
+          echo "🔄 Limpando revisões antigas da Task Definition..."
+          FAMILY_NAME=${{ env.CONTAINER_NAME }}-task
+
+          REVISION_ARNS=$(aws ecs list-task-definitions \
+            --family-prefix $FAMILY_NAME \
+            --sort DESC \
+            --region $AWS_REGION \
+            --output text \
+            --query 'taskDefinitionArns')
+
+          KEEP_REVISIONS=$(echo "$REVISION_ARNS" | head -n 2)
+
+          for arn in $REVISION_ARNS; do
+            if ! echo "$KEEP_REVISIONS" | grep -q "$arn"; then
+              echo "🗑 Excluindo Task Definition antiga: $arn"
+              aws ecs deregister-task-definition --task-definition $arn --region $AWS_REGION
+            else
+              echo "✅ Mantendo Task Definition recente: $arn"
+            fi
+          done
